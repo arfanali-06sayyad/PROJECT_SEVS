@@ -29,3 +29,15 @@ clear
 cd "file name"      #to enter the file
 cd ..               # to exit the file
 
+## Design Note
+
+The architecture leverages a decoupled data pipeline using Streamlit for rapid presentation and Pandas/NumPy for vectorized backend operations.
+This separation guarantees mathematical integrity during dynamic time-series resampling.
+Streamlit was chosen for fast data application deployment, inspiration taken form industrial HERCULES interface, reducing load. 
+Plotly was integrated for its high-performance rendering of dense telemetry trends. 
+
+The foundational Z-score anomaly logic would be used to train LSTM or ARIMA models for proactive predictive maintenance forecasting.
+
+### Notes on Data Handling
+To ensure industrial accuracy, cumulative totalizers (`feed_weight_kg`, `bag_count`) are explicitly routed through a custom `last - first` delta function during aggregation to prevent totalizer bloat.
+The system derives plant state dynamically (`is_running = throughput > 0`), ensuring that the anomaly detection engine mathematically ignores idle Sunday maintenance windows and planned stoppages to eliminate false positive alerts.
