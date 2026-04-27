@@ -1,0 +1,62 @@
+/* ui/style.css */
+
+/* Hide Streamlit elements */
+#MainMenu {visibility: hidden;}
+header {visibility: hidden;}
+footer {visibility: hidden;}
+
+/* Darken the entire app background */
+.stApp {
+    background-color: #0E1117;
+}
+
+/* Custom Premium KPI Cards */
+.kpi-card {
+    background-color: #1A1C24;
+    border: 1px solid #2B2F3A;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    text-align: left;
+    transition: transform 0.2s;
+}
+.kpi-card:hover {
+    transform: translateY(-2px);
+    border-color: #4A5568;
+}
+
+.kpi-title {
+    color: #A0AEC0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.kpi-value {
+    color: #FFFFFF;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.kpi-unit {
+    color: #718096;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Accent lines for specific cards */
+.accent-green { border-left: 4px solid #10B981; }
+.accent-blue { border-left: 4px solid #3B82F6; }
+.accent-purple { border-left: 4px solid #8B5CF6; }
+.accent-orange { border-left: 4px solid #F59E0B; }
+.accent-red { border-left: 4px solid #EF4444; }
+
+/* Customizing the dataframe */
+.stDataFrame {
+    background-color: #1A1C24;
+    border-radius: 8px;
+    padding: 10px;
+}
