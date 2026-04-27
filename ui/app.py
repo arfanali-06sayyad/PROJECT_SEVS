@@ -18,7 +18,7 @@ from ui.components import render_sidebar_controls
 
 st.set_page_config(
     page_title="Project Sevs | Industrial Analytics",
-    page_icon="🏭",
+    page_icon="💻",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -69,7 +69,7 @@ def main():
     load_css()
     render_sidebar_controls()
     
-    st.markdown("<h1 style='color: #E2E8F0; font-weight: 700; letter-spacing: 1px;'>🏭 PROJECT SEVS <span style='color: #4A5568;'>// Operations Center</span></h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #E2E8F0; font-weight: 700; letter-spacing: 1px;'>💻 PROJECT SEVS <span style='color: #4A5568;'>// Operations Center</span></h1>", unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
     
     with st.spinner("Initializing Pipeline..."):
