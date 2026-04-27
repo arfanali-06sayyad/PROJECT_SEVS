@@ -41,3 +41,12 @@ The foundational Z-score anomaly logic would be used to train LSTM or ARIMA mode
 ### Notes on Data Handling
 To ensure industrial accuracy, cumulative totalizers (`feed_weight_kg`, `bag_count`) are explicitly routed through a custom `last - first` delta function during aggregation to prevent totalizer bloat.
 The system derives plant state dynamically (`is_running = throughput > 0`), ensuring that the anomaly detection engine mathematically ignores idle Sunday maintenance windows and planned stoppages to eliminate false positive alerts.
+
+
+**To update the gih hub repoaitories follow certain steps**
+check "git status"
+ git add . 
+ git commit -m "Update : "changes""
+ git push 
+It will then only reflect the changes in the repository.
+
