@@ -1,30 +1,39 @@
 import streamlit as st
 from pathlib import Path
-
+import datetime
 
 # -------- UI COMPONENTS --------
 
-def render_sidebar_controls():
-    # Construct path to the new logo image relative to this script
+def render_sidebar_controls(df_min_date, df_max_date):
     logo_path = Path(__file__).parent / "logo.png"
 
-    # Strict existence check: Display logo only if the dependency file is present
     if logo_path.exists():
-        # Display the custom logo with a custom width for premium visual impact
         st.sidebar.image(str(logo_path), width=180)
-    else:
-        # Prompt user to check the image's placement within the project directory
-        st.sidebar.error("Logo file 'logo.png' not found. Ensure it sits in the 'ui/' folder.")
 
-    # Apply same non-generic header divider and tight spacing used in the backend
-    st.sidebar.markdown("## System Controls")
+    st.sidebar.markdown("<br>", unsafe_allow_html=True)
+    
+    st.sidebar.markdown("### Navigation")
+    
+    if 'nav_selection' not in st.session_state:
+        st.session_state.nav_selection = "Dashboard"
+        
+    if st.sidebar.button("Dashboard", use_container_width=True):
+        st.session_state.nav_selection = "Dashboard"
+        
+    if st.sidebar.button("Historical Reports", use_container_width=True):
+        st.session_state.nav_selection = "Historical Reports"
+    
     st.sidebar.markdown("---")
+    st.sidebar.markdown("### Global Filters")
     
-    # Render user toggles and information panels
-    auto_refresh = st.sidebar.checkbox("Auto-Refresh Data", value=True)
-    show_raw_data = st.sidebar.checkbox("Show Raw Telemetry", value=False)
+    global_date_range = st.sidebar.date_input(
+        "Operating Window", 
+        [df_min_date, df_max_date], 
+        min_value=df_min_date, 
+        max_value=df_max_date
+    )
     
     st.sidebar.markdown("---")
-    st.sidebar.info("System Engine: Active\n\nModel: Sevs-Core v1.0")
+    st.sidebar.info("System Engine: Active\n\nModel: Sevs-Core v2.0")
     
-    return auto_refresh, show_raw_data
+    return st.session_state.nav_selection, global_date_range
