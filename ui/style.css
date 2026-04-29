@@ -1,62 +1,112 @@
 /* ui/style.css */
 
-/* Hide Streamlit elements */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+/* Force Global Light Theme */
+.stApp {
+    background-color: #f6faff !important;
+    font-family: 'Inter', sans-serif !important;
+    color: #141d23 !important;
+}
+
 #MainMenu {visibility: hidden;}
 header {visibility: hidden;}
 footer {visibility: hidden;}
 
-/* Darken the entire app background */
-.stApp {
-    background-color: #0E1117;
-}
-
-/* Custom Premium KPI Cards */
+/* Custom KPI Cards */
 .kpi-card {
-    background-color: #1A1C24;
-    border: 1px solid #2B2F3A;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    text-align: left;
-    transition: transform 0.2s;
-}
-.kpi-card:hover {
-    transform: translateY(-2px);
-    border-color: #4A5568;
+    background-color: #ffffff;
+    border: 1px solid #c2c6d4;
+    border-radius: 4px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .kpi-title {
-    color: #A0AEC0;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.05em;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    color: #424752;
+}
+
+/* Make the Main KPI physically larger */
+.kpi-value-main {
+    font-size: 48px !important;
+    line-height: 56px !important;
+    font-weight: 700;
+    color: #141d23;
 }
 
 .kpi-value {
-    color: #FFFFFF;
-    font-size: 1.8rem;
+    font-size: 36px;
+    line-height: 44px;
     font-weight: 700;
-    margin: 0;
+    color: #141d23;
 }
 
 .kpi-unit {
-    color: #718096;
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 400;
+    color: #424752;
 }
 
-/* Accent lines for specific cards */
-.accent-green { border-left: 4px solid #10B981; }
-.accent-blue { border-left: 4px solid #3B82F6; }
-.accent-purple { border-left: 4px solid #8B5CF6; }
-.accent-orange { border-left: 4px solid #F59E0B; }
-.accent-red { border-left: 4px solid #EF4444; }
+/* Status Badges */
+.status-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.badge-ok { background-color: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
+.badge-alert { background-color: #ffebee; color: #b71c1c; border: 1px solid #ffcdd2; }
+.badge-neutral { background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+/* Alert Box Styling (Black text, Red border/background) */
+.alert-box {
+    background-color: #ffebee;
+    border-left: 4px solid #b71c1c;
+    padding: 16px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+.alert-time { color: #b71c1c; font-weight: 700; font-size: 12px; display: block; margin-bottom: 4px; }
+.alert-msg { color: #141d23; font-size: 14px; font-weight: 500; }
 
 /* Customizing the dataframe */
 .stDataFrame {
-    background-color: #1A1C24;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #c2c6d4;
+    border-radius: 4px;
     padding: 10px;
+}
+/* Force clean white styling and curved rectangular vertices on Streamlit buttons */
+div.stButton > button {
+    background-color: #ffffff !important;
+    color: #424752 !important;
+    border: 1px solid #c2c6d4 !important;
+    border-radius: 8px !important; /* Soft curved rectangle */
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 12px 24px !important;
+    transition: all 0.3s ease-in-out !important; /* Smooth animation for the glow */
+}
+
+/* Light Blue Hue Glow on Hover */
+div.stButton > button:hover {
+    border-color: #60a5fa !important; /* Light blue border */
+    color: #003f87 !important;
+    background-color: #f6faff !important;
+    box-shadow: 0 0 15px rgba(96, 165, 250, 0.6) !important; /* The glowing hue */
 }
