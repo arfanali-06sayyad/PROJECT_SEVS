@@ -1,4 +1,4 @@
-# PROJECT SEVS - Industrial Intellignece Dashboard
+# Mini Hercules- Industrial Intellignece Dashboard
 A Streamlit-based operations center for flour mill telemetry. Ingests historian data, applies Z-score anomaly detection, and calculates operational KPIs with cumulative delta math.
 
                     #-------------Features:----------------
