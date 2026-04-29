@@ -21,21 +21,35 @@ class ProcessIntelligence:
         self.logger = logging.getLogger(self.__class__.__name__)
         
     def detect_anomalies(self, df: pd.DataFrame) -> pd.DataFrame:
-        self.logger.info("Running statistical anomaly detection...")
+        self.logger.info("Running statistical anomaly detection on moisture...")
         
-        running_mask = df['is_running'] == True
-        temp_mean = df.loc[running_mask, 'grinder_temp_c'].mean()
-        temp_std = df.loc[running_mask, 'grinder_temp_c'].std()
+        df_intel = df.copy()
+        target_col = 'moisture_pct' 
         
-        df['temp_zscore'] = 0.0
+        rolling_mean = df_intel[target_col].rolling(window=24, min_periods=5).mean().shift(1)
+        rolling_std = df_intel[target_col].rolling(window=24, min_periods=5).std().shift(1)
         
-        if temp_std > 0:
-            df.loc[running_mask, 'temp_zscore'] = (df.loc[running_mask, 'grinder_temp_c'] - temp_mean) / temp_std
+        df_intel['moisture_zscore'] = 0.0
+        valid_std_mask = rolling_std > 0
+        
+        df_intel.loc[valid_std_mask, 'moisture_zscore'] = (
+            (df_intel.loc[valid_std_mask, target_col] - rolling_mean[valid_std_mask]) 
+            / rolling_std[valid_std_mask]
+        )
             
-        df['is_anomaly'] = False
-        df.loc[running_mask & (df['temp_zscore'].abs() > self.config.anomaly_zscore_threshold), 'is_anomaly'] = True
+        df_intel['is_anomaly'] = False
         
-        return df
+        is_startup = (df_intel['timestamp'].dt.hour == 6)
+        
+        anomaly_mask = (
+            (df_intel['is_running'] == True) & 
+            (~is_startup) & 
+            (df_intel['moisture_zscore'].abs() > self.config.anomaly_zscore_threshold)
+        )
+        
+        df_intel.loc[anomaly_mask, 'is_anomaly'] = True
+        
+        return df_intel
 
     def generate_alerts(self, df: pd.DataFrame) -> List[Alert]:
         alerts = []
@@ -44,8 +58,8 @@ class ProcessIntelligence:
         for _, row in anomalies.iterrows():
             alerts.append(Alert(
                 timestamp=row['timestamp'],
-                category='ANOMALY',
-                message=f"Temp Anomaly: Grinder {row['grinder_temp_c']:.1f}°C (Z: {row['temp_zscore']:.2f})",
+                category='PROCESS DEVIATION',
+                message=f"Moisture Excursion: {row['moisture_pct']:.2f}% (Z: {row['moisture_zscore']:.2f})",
                 severity='HIGH'
             ))
             
